@@ -35,8 +35,27 @@ function depth_extract( element, max_depth, depth, contentTable ) {
 }
 
 function highlight( element ) {
-	// element.style.backgroundColor = "yellow"
-	console.log("Highlighting:", element )
+	element.style.backgroundColor = "yellow"
+	// console.log("Highlighting:", element )
+}
+
+function match( matching_this, matching_that ) {
+	var matches = []
+	for( let i in matching_this ) {
+		var found = true
+		var element_compare_table = [matching_this[i].child_element_count, matching_this[i].classname, matching_this[i].node_name, matching_this[i].node_type]
+
+		for( let j in element_compare_table ) {
+			if( matching_that.indexOf( element_compare_table[j] ) != element_compare_table.indexOf( element_compare_table[j] )) {
+				found = false
+				break
+			}
+		}
+
+		if( found ) matches.push( matching_this[i].element )
+	}
+
+	return matches
 }
 
 function process( click_event ) {
@@ -63,24 +82,13 @@ function process( click_event ) {
 	// maybe? check same elements against parentNode
 	
 	const active_content_table = depth_extract( active_component, 0 )[0]
-	const active_content_compare_table = [active_content_table.child_element_count, active_content_table.classname, active_content_table.node_name, active_content_table.node_type ]
 	const content_table = depth_extract( active_component )
 
-	console.log(active_content_table)
-	console.log( content_table )
+	const active_content_compare_table = [active_content_table.child_element_count, active_content_table.classname, active_content_table.node_name, active_content_table.node_type ]
 
-	for( let i in content_table ) {
-		var element_compare_table = [content_table[i].child_element_count, content_table[i].classname, content_table[i].node_name, content_table[i].node_type]
+	// console.log(active_content_table)
+	// console.log( content_table )
 
-		var found = true
-		for( let j in element_compare_table ) {
-			if( active_content_compare_table.indexOf( element_compare_table[j] ) != element_compare_table.indexOf( element_compare_table[j] )) {
-				found = false
-				break;
-			}
-		}
-
-		if( found ) highlight( content_table[i].element )
-	}
-		
+	const matches = match( content_table, active_content_compare_table )
+	console.log("matches:", matches)
 }
