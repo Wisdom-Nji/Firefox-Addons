@@ -4,6 +4,9 @@
 window.oncontextmenu = process
 
 function depth_extract( element, max_depth, depth, contentTable ) {
+	// https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
+	const end_node_type = 7
+
 	if( typeof depth == "undefined") depth = 0
 	if( typeof contentTable == "undefined") contentTable = []
 	if( typeof max_depth == "undefined" ) max_depth = -1
@@ -18,20 +21,22 @@ function depth_extract( element, max_depth, depth, contentTable ) {
 		"child_element_count" : element.childElementCount,
 		"classname" : element.className,
 		"node_name" : element.nodeName,
-		"node_type" : element.nodeType
+		"node_type" : element.nodeType,
+		"element" : element
 	}
 
 	contentTable.push( content )
-	// console.log("At depth:", depth, contentTable)
-	// console.log("depth:", depth)
-	// console.log(contentTable)
-	// console.log("max_depth:", max_depth)
 
-	if( Number(element.nodeType) > 8 || Number(max_depth) == 0) return contentTable
+	if( Number(element.nodeType) > end_node_type || Number(max_depth) == 0) return contentTable
 
 	max_depth = max_depth == -1 ? max_depth : --max_depth
 	contentTable = depth_extract( element.parentNode, max_depth, ++depth, contentTable )
 	return contentTable
+}
+
+function highlight( element ) {
+	// element.style.backgroundColor = "yellow"
+	console.log("Highlighting:", element )
 }
 
 function process( click_event ) {
@@ -57,9 +62,25 @@ function process( click_event ) {
 	// then check against nodeType
 	// maybe? check same elements against parentNode
 	
-	const activeContentTable = depth_extract( active_component, 1 )
-	const contentTable = depth_extract( active_component )
+	const active_content_table = depth_extract( active_component, 0 )[0]
+	const active_content_compare_table = [active_content_table.child_element_count, active_content_table.classname, active_content_table.node_name, active_content_table.node_type ]
+	const content_table = depth_extract( active_component )
 
-	console.log(activeContentTable)
-	console.log( contentTable )
+	console.log(active_content_table)
+	console.log( content_table )
+
+	for( let i in content_table ) {
+		var element_compare_table = [content_table[i].child_element_count, content_table[i].classname, content_table[i].node_name, content_table[i].node_type]
+
+		var found = true
+		for( let j in element_compare_table ) {
+			if( active_content_compare_table.indexOf( element_compare_table[j] ) != element_compare_table.indexOf( element_compare_table[j] )) {
+				found = false
+				break;
+			}
+		}
+
+		if( found ) highlight( content_table[i].element )
+	}
+		
 }
