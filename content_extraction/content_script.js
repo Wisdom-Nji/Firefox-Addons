@@ -35,7 +35,7 @@ function depth_extract( element, max_depth, depth, contentTable ) {
 }
 
 function highlight( element ) {
-	element.style.backgroundColor = "yellow"
+	element.style.backgroundColor = "blue"
 	// console.log("Highlighting:", element )
 }
 
@@ -52,7 +52,7 @@ function match( matching_this, matching_that ) {
 			}
 		}
 
-		if( found ) matches.push( matching_this[i].element )
+		if( found ) matches.push( matching_this[i] )
 	}
 
 	return matches
@@ -91,4 +91,6 @@ function process( click_event ) {
 
 	const matches = match( content_table, active_content_compare_table )
 	console.log("matches:", matches)
+
+	for( let i in matches ) highlight( matches[i].element )
 }
