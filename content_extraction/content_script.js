@@ -3,20 +3,35 @@
 // document.body.style.backgroundColor = "black"
 window.oncontextmenu = process
 
-var depth = -1
-function checks( element ) {
-	++depth
-	console.log("At depth:", depth)
-	const child_element_count = element.childElementCount
-	const class_name = element.className
-	const node_name = element.nodeName
-	const node_type = element.nodeType
-	console.log("child_element_count:", length)
+function depth_extract( element, max_depth, depth, contentTable ) {
+	if( typeof depth == "undefined") depth = 0
+	if( typeof contentTable == "undefined") contentTable = []
+	if( typeof max_depth == "undefined" ) max_depth = -1
+
+	/*
+	console.log("child_element_count:", child_element_count)
 	console.log("classname:", class_name)
 	console.log("node_name:", node_name)
 	console.log("node_type:", node_type)
-	checks( element.parentNode )
-	console.log()
+	*/
+	var content = {
+		"child_element_count" : element.childElementCount,
+		"classname" : element.className,
+		"node_name" : element.nodeName,
+		"node_type" : element.nodeType
+	}
+
+	contentTable.push( content )
+	// console.log("At depth:", depth, contentTable)
+	// console.log("depth:", depth)
+	// console.log(contentTable)
+	// console.log("max_depth:", max_depth)
+
+	if( Number(element.nodeType) > 8 || Number(max_depth) == 0) return contentTable
+
+	max_depth = max_depth == -1 ? max_depth : --max_depth
+	contentTable = depth_extract( element.parentNode, max_depth, ++depth, contentTable )
+	return contentTable
 }
 
 function process( click_event ) {
@@ -42,5 +57,9 @@ function process( click_event ) {
 	// then check against nodeType
 	// maybe? check same elements against parentNode
 	
-	checks( active_component )
+	const activeContentTable = depth_extract( active_component, 1 )
+	const contentTable = depth_extract( active_component )
+
+	console.log(activeContentTable)
+	console.log( contentTable )
 }
