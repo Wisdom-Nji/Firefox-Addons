@@ -34,8 +34,10 @@ function depth_extract( element, max_depth, depth, contentTable ) {
 	return contentTable
 }
 
-function highlight( element ) {
-	element.style.backgroundColor = "blue"
+function highlight( element, h_color ) {
+	if( typeof h_color == "undefined" ) 
+		h_color = element.style.backgroundColor == "yellow" ? "grey" : "yellow"
+	element.style.backgroundColor = h_color
 	// console.log("Highlighting:", element )
 }
 
