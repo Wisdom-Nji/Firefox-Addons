@@ -1,0 +1,24 @@
+{
+	"manifest_version" : 2,
+	"name" : "extracts_js_code_in_any_website",
+	"version" : "0.1",
+	"description" : "extracts attributes of selected content from webpages",
+	"permissions" : [ "activeTab", "contextMenus", "tabs" ],
+	"background" : {
+		"scripts" : ["main.js"]
+	},
+	"content_scripts" : [
+		{
+			"matches" : ["<all_urls>"],
+			"js" : ["content_script.js"]
+		}
+	],
+	"page_action" : {
+		"browser_style" : true,
+		"default_title" : "fuck it",
+		"default_icon" : {
+			"19" : "computer-tower.png",
+			"38" : "computer-tower.png"
+		}
+	}
+}
