@@ -76,30 +76,35 @@ function process( click_event ) {
 	*/
 
 	const active_component = document.activeElement
+	var link = ""
 	console.log(active_component)
+	if( active_component.tagName == "A" ) {
+		link = active_component.href
+		console.log("Link", link)
+		document.body.setAttribute("contextmenu", "sci-hub")
 
-	document.body.setAttribute("contextmenu", "sci-hub")
+		var menuitem = document.createElement("menuitem");
+		menuitem.setAttribute("label", "sci-hub");
+		// menuitem.setAttribute("onclick", "sci-hub()");
+		menuitem.onclick = scihub( link )
 
-	var menuitem = document.createElement("menuitem");
-	menuitem.setAttribute("label", "sci-hub");
-	// menuitem.setAttribute("onclick", "sci-hub()");
-	menuitem.onclick = scihub( link )
+		/*
+		var menuitem_ = document.createElement("menuitem");
+		menuitem_.setAttribute("label", "Facebook");
+		menuitem_.setAttribute("onclick", "shareViaFacebook()");
+		*/
 
-	/*
-	var menuitem_ = document.createElement("menuitem");
-	menuitem_.setAttribute("label", "Facebook");
-	menuitem_.setAttribute("onclick", "shareViaFacebook()");
-	*/
+		var menu = document.createElement("menu");
+		menu.setAttribute("label", "Personals");
+		menu.appendChild(menuitem);
+		menu.appendChild(menuitem_);
 
-	var menu = document.createElement("menu");
-	menu.setAttribute("label", "Personals");
-	menu.appendChild(menuitem);
-	menu.appendChild(menuitem_);
+		var menu_ = document.createElement("menu");
+		menu_.setAttribute("type", "context");
+		menu_.setAttribute("id", "sci-hub");
+		menu_.appendChild(menu);
+	}
 
-	var menu_ = document.createElement("menu");
-	menu_.setAttribute("type", "context");
-	menu_.setAttribute("id", "sci-hub");
-	menu_.appendChild(menu);
 	
 	/*
 	const active_content_table = depth_extract( active_component, 0 )[0]
