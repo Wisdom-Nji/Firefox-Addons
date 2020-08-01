@@ -103,6 +103,7 @@ function process( click_event ) {
 		menu_.setAttribute("type", "context");
 		menu_.setAttribute("id", "sci-hub");
 		menu_.appendChild(menu);
+		document.body.appendChild( menu_ )
 	}
 
 	
