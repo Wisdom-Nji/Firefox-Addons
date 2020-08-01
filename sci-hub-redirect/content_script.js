@@ -86,7 +86,9 @@ function process( click_event ) {
 		var menuitem = document.createElement("menuitem");
 		menuitem.setAttribute("label", "sci-hub");
 		// menuitem.setAttribute("onclick", "sci-hub()");
-		menuitem.onclick = scihub( link )
+		menuitem.onclick = function() {
+			scihub( link )
+		}
 
 		/*
 		var menuitem_ = document.createElement("menuitem");
@@ -97,7 +99,7 @@ function process( click_event ) {
 		var menu = document.createElement("menu");
 		menu.setAttribute("label", "Personals");
 		menu.appendChild(menuitem);
-		menu.appendChild(menuitem_);
+		// menu.appendChild(menuitem_);
 
 		var menu_ = document.createElement("menu");
 		menu_.setAttribute("type", "context");
