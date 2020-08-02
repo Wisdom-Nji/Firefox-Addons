@@ -62,6 +62,7 @@ function match( matching_this, matching_that ) {
 
 function scihub ( link ) {
 	console.log("Should tab this in scihub")
+	window.open( link, '_blank')
 }
 
 function process( click_event ) {
@@ -77,18 +78,21 @@ function process( click_event ) {
 
 	const active_component = document.activeElement
 	var link = ""
-	console.log(active_component)
 	if( active_component.tagName == "A" ) {
+		console.log(active_component)
 		link = active_component.href
-		console.log("Link", link)
 		document.body.setAttribute("contextmenu", "sci-hub")
 
+		/*
 		var menuitem = document.createElement("menuitem");
 		menuitem.setAttribute("label", "sci-hub");
-		// menuitem.setAttribute("onclick", "sci-hub()");
+		menuitem.setAttribute("onclick", "scihub()");
 		menuitem.onclick = function() {
+			console.log("sci-hub clicked")
+			console.log("Link", link)
 			scihub( link )
 		}
+		*/
 
 		/*
 		var menuitem_ = document.createElement("menuitem");
@@ -96,9 +100,12 @@ function process( click_event ) {
 		menuitem_.setAttribute("onclick", "shareViaFacebook()");
 		*/
 
-		var menu = document.createElement("menu");
-		menu.setAttribute("label", "Personals");
-		menu.appendChild(menuitem);
+		var menu = document.createElement("menuitem");
+		menu.setAttribute("label", "sci-hub");
+		menu.onclick = function() {
+			console.log("sci-hub link clicked")
+			scihub( link, '_blank')
+		}
 		// menu.appendChild(menuitem_);
 
 		var menu_ = document.createElement("menu");
