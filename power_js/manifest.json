@@ -10,7 +10,7 @@
 	"content_scripts" : [
 		{
 			"matches" : ["<all_urls>"],
-			"js" : ["content_script.js"]
+			"js" : ["content_script.js", "js_parser.js"]
 		}
 	],
 	"page_action" : {

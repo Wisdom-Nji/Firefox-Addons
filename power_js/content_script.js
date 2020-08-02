@@ -3,8 +3,8 @@
 const ch_body = document.body.children
 // recursive_extract( ch_body )
 const node_iterator = document.createNodeIterator( document.body, NodeFilter.SHOW_ALL )
-for( let node in node_iterator.nextNode()) 
-	console.log( node )
+// for( let node in node_iterator.nextNode()) 
+	// console.log( node )
 
 function element_info( element ) {
 	const id = element.id
