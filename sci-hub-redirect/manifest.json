@@ -1,8 +1,8 @@
 {
 	"manifest_version" : 2,
-	"name" : "content_extraction_firefox",
-	"version" : "0.1",
-	"description" : "extracts attributes of selected content from webpages",
+	"name" : "sci-hub navigator",
+	"version" : "1.0",
+	"description" : "sends the clicked link to sci-hub for paper extraction",
 	"permissions" : [ "activeTab", "contextMenus", "tabs" ],
 	"background" : {
 		"scripts" : ["main.js"]
